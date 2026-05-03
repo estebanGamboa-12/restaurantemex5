@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bone: #F4F1EC;
+    --ink: #0A0908;
+    --rust: #B82E1F;
+  }
+
+  html {
+    background: var(--bone);
+    color: var(--ink);
+    font-family: var(--font-inter-tight), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  body {
+    overscroll-behavior: none;
+    overflow-x: clip;
+  }
+
+  @keyframes heroDrift {
+    from {
+      transform: scale(1.02) translate3d(-1.5%, -1%, 0);
+    }
+    to {
+      transform: scale(1.1) translate3d(1.5%, 1%, 0);
+    }
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bone);
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply px-6 md:px-10 lg:px-16;
+  }
+
+  .label {
+    @apply font-mono text-[10px] uppercase tracking-[0.22em] text-ink/55;
+  }
+
+  .label-light {
+    @apply font-mono text-[10px] uppercase tracking-[0.22em] text-bone/55;
+  }
+
+  .display {
+    font-family: var(--font-inter-tight), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+  }
+
+  .display em,
+  .serif-italic {
+    font-family: var(--font-instrument), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  /* Lenis required */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* Cursor */
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--rust);
+    pointer-events: none;
+    z-index: 99999;
+    box-shadow: 0 0 0 2px rgba(244, 241, 236, 0.9), 0 0 18px rgba(184, 46, 31, 0.45);
+  }
+
+  .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(184, 46, 31, 0.9);
+    pointer-events: none;
+    z-index: 99998;
+    background: rgba(244, 241, 236, 0.04);
+    box-shadow: 0 0 0 1px rgba(244, 241, 236, 0.4), 0 10px 30px rgba(10, 9, 8, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cursor-ring span {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-shadow: 0 1px 10px rgba(244, 241, 236, 0.85);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .cursor-ring.is-text span { opacity: 1; }
+
+  /* Magnetic button */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-4 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 ease-smooth border border-current relative overflow-hidden;
+    min-height: 48px;
+    text-align: center;
+  }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    transform: translateY(101%);
+    transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 0;
+  }
+
+  .btn:hover::after { transform: translateY(0); }
+  .btn > * { position: relative; z-index: 1; transition: color 0.55s cubic-bezier(0.65, 0, 0.35, 1); }
+  .btn.btn-dark:hover > * { color: var(--bone); }
+  .btn.btn-light:hover > * { color: var(--ink); }
+
+  /* Reveal text wrapper */
+  .reveal-clip {
+    overflow: hidden;
+    display: inline-block;
+  }
+  .reveal-clip > span {
+    display: inline-block;
+    will-change: transform;
+  }
+
+  /* Vertical text */
+  .vert-rl {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  /* Image hover scale */
+  .img-hover {
+    overflow: hidden;
+  }
+  .img-hover img {
+    transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .img-hover:hover img {
+    transform: scale(1.05);
+  }
+}
